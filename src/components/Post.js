@@ -5,7 +5,7 @@ import InputReply from './InputReply'
 import Vote from './Vote'
 
 const Post = ({depth, name, content}) => {
-  const [replies, setReplies] = useState([])  
+  const [replies, setReplies] = useState([]) 
 
   if (depth === Consts.maxDepth) {
     // Base case
@@ -13,12 +13,18 @@ const Post = ({depth, name, content}) => {
   }
   
   const updateReply = () => {
-    setReplies([...replies, <InputReply depth={depth} replies={replies} setReplies={setReplies}/>])
+    if (replies.length === 0 || replies[replies.length - 1].type !== InputReply) {
+      setReplies([...replies, <InputReply depth={depth} replies={replies} setReplies={setReplies}/>])
+    } else {
+      setReplies(replies.slice(0, replies.length - 1))
+    }
   }
 
   const createReplyButton = () => {
     if (depth < Consts.maxDepth - 1) {
-      return <button className='reply' onClick={e => { updateReply() }}>Reply</button>
+      return (
+        <button className='reply' onClick={e => { updateReply() }}>Reply</button>
+      )
     } else {
       console.log('no')
     }
