@@ -45,18 +45,18 @@ h2 {
 	height: 33%;
 }
 
-button {
+.submit-root-post {
 	float: right;
 	background-color: rgb(91, 182, 182);
 	border-color:  rgb(91, 182, 182);
 	border-radius: 1vh;
-	height: 15%;
-	width: 10%;
+	height: 6vh;
+	width: 15vh;
 	font-size: 2.5vh;
 	color:white
 }
 
-button:disabled {
+.submit-root-post:disabled {
 	opacity: 0.3;
 }
 
@@ -76,7 +76,9 @@ button:disabled {
 }
 
 .post-container {
-	width: 90%;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
 	border-left: 2px solid #ddd;
 	padding-left: 1vh;
 	margin-bottom: 1vh;
@@ -85,4 +87,48 @@ button:disabled {
 .post-name {
 	font-size: larger;
 	font-weight: bold;
+}
+
+.post {
+	width: 90%
+}
+
+.post-and-vote {
+	display: flex;
+	flex-direction: row;
+}
+
+.vote {
+	display: flex;
+	flex-direction: column;
+}
+
+.arrow {
+	width: 12px;
+	height: 12px;
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+	background-color: transparent;
+}
+
+.up {
+  transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+}
+
+.down {
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+
+.reply {
+	background-color: rgb(91, 182, 182);
+	border-color:  rgb(91, 182, 182);
+	border-radius: 1vh;
+	height: 6vh;
+	width: 15vh;
+	font-size: 2.5vh;
+	color:white
 }

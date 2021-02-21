@@ -5,9 +5,9 @@ const Vote = () => {
 
   return (
     <div className='vote'>
-     	<button className='up' onClick={e => { setVote(vote + 1)}}>Up</button>
-      <div>{vote}</div>
-      <button className='down' onClick={e => { setVote(vote - 1)}}>Down</button>
+      <button className='arrow up' onClick={e => { setVote(vote + 1)}}></button>
+      {vote}
+      <button className='arrow  down' onClick={e => { setVote(vote - 1)}}></button>
     </div>
   )
 }

@@ -18,7 +18,7 @@ const Post = ({depth, name, content}) => {
 
   const createReplyButton = () => {
     if (depth < Consts.maxDepth - 1) {
-      return <button onClick={e => { updateReply() }}>Reply</button>
+      return <button className='reply' onClick={e => { updateReply() }}>Reply</button>
     } else {
       console.log('no')
     }
@@ -26,11 +26,13 @@ const Post = ({depth, name, content}) => {
 
   return (
     <div className={`post-container depth-${depth}`}>
-      <div className='post'> 
-        <div className='post-name'>{name}</div>
-        <div className='post-content'>{content}</div>  
+      <div className='post-and-vote'>
+        <div className='post'> 
+          <div className='post-name'>{name}</div>
+          <div className='post-content'>{content}</div>  
+        </div>
+        <Vote/>
       </div>
-      <Vote/>
       {replies}
       {createReplyButton()}
     </div>
