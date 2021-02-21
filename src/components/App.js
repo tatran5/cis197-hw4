@@ -25,29 +25,30 @@ import Consts from './Consts'
 //   ) 
 // }
 
-const InputReply = ({id, setId, depth, setReply}) => {
+const InputReply = ({id, depth, replies, setReplies}) => {
   const [inputName, setInputName] = useState('')
   const [inputContent, setInputContent] = useState('')
+  console.log(id)
 
-  const deleteInputReply = (inputName, inputContent, id, depth, setReply) => {
-    console.log(id)
-    // const replyElm = document.getElementById(id)
-    // setReply(<Post depth={depth} name={inputName} content={inputContent} id={id} setId={setId}/>)
-    // replyElm.remove()
+  const deleteInputReply = (id, depth, setReplies) => {
+    const replyElm = document.getElementById(id)
+    console.log(replyElm)
+    setReplies([...replies, <Post depth={depth + 1} name={inputName} content={inputContent} id={id}/>])
   }
 
   return (
     <div className='input reply' id={id}>
-      <input onChange={e => {console.log(e.target.value); setInputName(e.target.value)}}/>
+      <input onChange={e => {setInputName(e.target.value)}}/>
       <input onChange={e => {setInputContent(e.target.value)}}/>
-      <button onClick={e => deleteInputReply(inputName, inputContent, id, depth, setReply)}>Submit</button>
+      <button onClick={e => deleteInputReply(id, depth, setReplies)}>Submit</button>
     </div>
   )
 }
 
 
-const Post = ({depth, name, content, id, setId}) => {
-  const [reply, setReply] = useState(<></>)
+const Post = ({depth, name, content, id}) => {
+  const [replies, setReplies] = useState([])
+  const [childId, setChildId] = useState(0)
 
   if (depth === Consts.maxDepth) {
     // Base case
@@ -55,15 +56,15 @@ const Post = ({depth, name, content, id, setId}) => {
   }
   
   const updateReply = (id) => {
-    setId(id + 1)
-    setReply(<InputReply id={id} depth={depth} setReply={setReply}/>)
+    setChildId(childId + 1)
+    setReplies([...replies, <InputReply id={`${id}-${childId}`} depth={depth} replies={replies} setReplies={setReplies}/>])
   }
 
   return (
-    <div className='post'>
+    <div className='post' id={`${id}`}>
       <div className='name'>{name}</div>
       <div className='content'>{content}</div>
-      {reply}
+      {replies}
       <button onClick={e => { updateReply(id) }}>Reply</button>
     </div>
   )
@@ -77,8 +78,8 @@ const App = () => {
   const [id, setId] = useState(0);
 
   const updateRootPosts = (rootPosts, inputName, inputContent, id) => {
-    console.log('submit root post')
-    setRootPosts([...rootPosts, <Post depth={0} name={inputName} content={inputContent} id={id} setId={setId}/>]);
+    setId(id + 1)
+    setRootPosts([...rootPosts, <Post depth={0} name={inputName} content={inputContent} id={id}/>]);
   }
 
   return (
