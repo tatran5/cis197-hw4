@@ -16,10 +16,16 @@ const App = () => {
   return (
     <>
       <h1>Thoughts?</h1>
-      <input value={inputName} onChange={e => setInputName(e.target.value)} placeholder='Name...'/>
-      <input value={inputContent} onChange={e => setInputContent(e.target.value)} placeholder='Thoughts...'/>
-      <button disabled={inputName.length === 0 || inputContent.length === 0} onClick={e => updateRootPosts(rootPosts, inputName, inputContent)}>Submit</button>
-      {rootPosts}
+      <div className='input-container'>
+        <h2>New Thought</h2>
+        <input className='input-field input-name' value={inputName} onChange={e => setInputName(e.target.value)} placeholder='Name...'/>
+        <input className='input-field input-content' value={inputContent} onChange={e => setInputContent(e.target.value)} placeholder='Thoughts...'/>
+        <button disabled={inputName.length === 0 || inputContent.length === 0} onClick={e => updateRootPosts(rootPosts, inputName, inputContent)}>Submit</button>
+      </div>
+      <div className='posts'>
+        <h2>Posts</h2>
+        {rootPosts}
+      </div>
     </>
   )
 }

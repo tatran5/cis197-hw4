@@ -25,9 +25,11 @@ const Post = ({depth, name, content}) => {
   }
 
   return (
-    <div className={`post depth-${depth}`}>
-      <div className='name'>{name}</div>
-      <div className='content'>{content}</div>
+    <div className={`post-container depth-${depth}`}>
+      <div className='post'> 
+        <div className='post-name'>{name}</div>
+        <div className='post-content'>{content}</div>  
+      </div>
       <Vote/>
       {replies}
       {createReplyButton()}
