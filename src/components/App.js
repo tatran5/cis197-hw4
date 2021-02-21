@@ -2,74 +2,55 @@ import React, { useState, useEffect } from 'react'
 
 import Consts from './Consts'
 
-// const getPostComponents = (posts, setPosts) => {
-// 	const postComponents =  posts.map((post, index) => {
-// 		return (
-// 			<Post posts={posts} setPosts={setPosts}
-//         user={post.user} content={post.content} vote={post.vote}/>
-// 		) 
-// 	})
-// 	return postComponents
-// }
-
-// const App = () => {
-  
-//   const [posts, setPosts] = useState([])
-
-//   return (
-//     <>
-//       <h1>Thoughts</h1>
-//       <InputPost posts={posts} setPosts={setPosts}/>
-//       {getPostComponents(posts, setPosts)}
-//     </>
-//   ) 
-// }
-
-const InputReply = ({id, depth, replies, setReplies}) => {
+const InputReply = ({depth, replies, setReplies}) => {
   const [inputName, setInputName] = useState('')
   const [inputContent, setInputContent] = useState('')
-  console.log(id)
 
-  const deleteInputReply = (id, depth, setReplies) => {
-    const replyElm = document.getElementById(id)
-    console.log(replyElm)
-    setReplies([...replies, <Post depth={depth + 1} name={inputName} content={inputContent} id={id}/>])
+  const deleteInputReply = (depth, setReplies) => {
+    setReplies([...replies, <Post depth={depth + 1} name={inputName} content={inputContent}/>])
   }
 
   return (
-    <div className='input reply' id={id}>
+    <div className='input reply'>
       <input onChange={e => {setInputName(e.target.value)}}/>
       <input onChange={e => {setInputContent(e.target.value)}}/>
-      <button onClick={e => deleteInputReply(id, depth, setReplies)}>Submit</button>
+      <button onClick={e => deleteInputReply(depth, setReplies)}>Submit</button>
     </div>
   )
 }
 
 
-const Post = ({depth, name, content, id}) => {
+const Post = ({depth, name, content}) => {
   const [replies, setReplies] = useState([])
-  const [childId, setChildId] = useState(0)
   const [vote, setVote] = useState(0)
+  
 
   if (depth === Consts.maxDepth) {
     // Base case
     return null
   }
   
-  const updateReply = (id) => {
-    setChildId(childId + 1)
-    setReplies([...replies, <InputReply id={`${id}-${childId}`} depth={depth} replies={replies} setReplies={setReplies}/>])
+  const updateReply = () => {
+    setReplies([...replies, <InputReply depth={depth} replies={replies} setReplies={setReplies}/>])
+  }
+
+  const createSubmitButton = () => {
+    if (depth < Consts.maxDepth - 1) {
+      return <button onClick={e => { updateReply() }}>Reply</button>
+    } else {
+      console.log('no')
+    }
   }
 
   return (
-    <div className='post' id={`${id}`}>
+    <div className={`post depth-${depth}`}>
       <div className='name'>{name}</div>
       <div className='content'>{content}</div>
       <button onClick={e => { setVote(vote + 1)}}>Up</button>
       <div>{vote}</div>
       <button onClick={e => { setVote(vote - 1)}}>Down</button>
       {replies}
-      <button onClick={e => { updateReply(id) }}>Reply</button>
+      {createSubmitButton()}
     </div>
   )
 }
@@ -78,11 +59,9 @@ const App = () => {
   const [inputName, setInputName] = useState('')
   const [inputContent, setInputContent] = useState('') 
   const [rootPosts, setRootPosts] = useState([])
-  const [id, setId] = useState(0);
 
-  const updateRootPosts = (rootPosts, inputName, inputContent, id) => {
-    setId(id + 1)
-    setRootPosts([...rootPosts, <Post depth={0} name={inputName} content={inputContent} id={id}/>]);
+  const updateRootPosts = (rootPosts, inputName, inputContent) => {
+    setRootPosts([...rootPosts, <Post depth={0} name={inputName} content={inputContent}/>]);
   }
 
   return (
@@ -90,7 +69,7 @@ const App = () => {
       <h1>Thoughts:</h1>
       <input value={inputName} onChange={e => {console.log(e.target.value); setInputName(e.target.value)}}/>
       <input value={inputContent} onChange={e => {setInputContent(e.target.value)}}/>
-      <button onClick={e => updateRootPosts(rootPosts, inputName, inputContent, id)}>Submit</button>
+      <button onClick={e => updateRootPosts(rootPosts, inputName, inputContent)}>Submit</button>
       {rootPosts}
     </>
   )
