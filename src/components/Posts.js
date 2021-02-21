@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react'
 
+import Vote from './Vote'
+import Post from './Post'
+
 const getPostComponents = (posts) => {
 	const postComponents =  posts.map((post, index) => {
 		return (
-			<div key={`${post.user}-${index}`}>
-				User: {post.user}, content: {post.content}
-			</div>
+			<Post user={post.user} content={post.content} vote={post}/>
 		) 
 	})
 	console.log(postComponents)
 	return postComponents
 }
 
-const Posts = ({posts}) => (
+const Posts = ({posts, setPosts}) => (
 	<>
 		{getPostComponents(posts)}
 	</>
