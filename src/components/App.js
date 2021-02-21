@@ -49,6 +49,7 @@ const InputReply = ({id, depth, replies, setReplies}) => {
 const Post = ({depth, name, content, id}) => {
   const [replies, setReplies] = useState([])
   const [childId, setChildId] = useState(0)
+  const [vote, setVote] = useState(0)
 
   if (depth === Consts.maxDepth) {
     // Base case
@@ -64,6 +65,9 @@ const Post = ({depth, name, content, id}) => {
     <div className='post' id={`${id}`}>
       <div className='name'>{name}</div>
       <div className='content'>{content}</div>
+      <button onClick={e => { setVote(vote + 1)}}>Up</button>
+      <div>{vote}</div>
+      <button onClick={e => { setVote(vote - 1)}}>Down</button>
       {replies}
       <button onClick={e => { updateReply(id) }}>Reply</button>
     </div>
@@ -71,7 +75,6 @@ const Post = ({depth, name, content, id}) => {
 }
 
 const App = () => {
-  const maxDepth = 2;
   const [inputName, setInputName] = useState('')
   const [inputContent, setInputContent] = useState('') 
   const [rootPosts, setRootPosts] = useState([])
