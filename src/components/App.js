@@ -14,7 +14,7 @@ const InputReply = ({depth, replies, setReplies}) => {
     <div className='input reply'>
       <input onChange={e => {setInputName(e.target.value)}}/>
       <input onChange={e => {setInputContent(e.target.value)}}/>
-      <button onClick={e => deleteInputReply(depth, setReplies)}>Submit</button>
+      <button disabled={inputName.length === 0 || inputContent.length === 0} onClick={e => deleteInputReply(depth, setReplies)}>Submit</button>
     </div>
   )
 }
@@ -69,7 +69,7 @@ const App = () => {
       <h1>Thoughts:</h1>
       <input value={inputName} onChange={e => {console.log(e.target.value); setInputName(e.target.value)}}/>
       <input value={inputContent} onChange={e => {setInputContent(e.target.value)}}/>
-      <button onClick={e => updateRootPosts(rootPosts, inputName, inputContent)}>Submit</button>
+      <button disabled={inputName.length === 0 || inputContent.length === 0} onClick={e => updateRootPosts(rootPosts, inputName, inputContent)}>Submit</button>
       {rootPosts}
     </>
   )
