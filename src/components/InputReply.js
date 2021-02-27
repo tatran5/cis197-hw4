@@ -1,16 +1,17 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable react/jsx-filename-extension */
-/* eslint-disable import/no-cycle */
 /* eslint-disable react/button-has-type */
 /* eslint-disable linebreak-style */
 /* eslint-disable react/prop-types */
+/* eslint-disable import/no-cycle */
 
 import React, { useState, useEffect } from 'react'
+
 import Post from './Post'
 
-const InputReply = ({ depth, replies, setReplies }) => {
+const InputReply = ({ depth, replies, setReplies, replyTo }) => {
   const [inputName, setInputName] = useState('')
-  const [inputContent, setInputContent] = useState('')
+  const [inputContent, setInputContent] = useState(`@${replyTo} `)
 
   const deleteInputReply = () => {
     setReplies([...replies, <Post depth={depth + 1} name={inputName} content={inputContent} />])
@@ -30,6 +31,7 @@ const InputReply = ({ depth, replies, setReplies }) => {
         onChange={e => {
           setInputContent(e.target.value)
         }}
+        value={inputContent}
         placeholder="Thoughts..."
       />
       <button className="submit" disabled={inputName.length === 0 || inputContent.length === 0} onClick={e => deleteInputReply(depth, setReplies)}>Submit</button>

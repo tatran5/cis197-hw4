@@ -12,15 +12,15 @@ import Vote from './Vote'
 const Post = ({ depth, name, content }) => {
   const [replies, setReplies] = useState([])
 
-  if (depth === Consts.maxDepth) {
-    // Base case
-    return null
-  }
-
   const updateReply = () => {
     if (replies.length === 0 || replies[replies.length - 1].type !== InputReply) {
       setReplies([...replies,
-        <InputReply depth={depth} replies={replies} setReplies={setReplies} />])
+        <InputReply
+          depth={depth}
+          replies={replies}
+          setReplies={setReplies}
+          replyTo={name}
+        />])
     } else {
       setReplies(replies.slice(0, replies.length - 1))
     }
